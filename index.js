@@ -1,42 +1,36 @@
 'use strict'
 
-const google = require('googleapis')
-const storage = google.storage('v1')
+/* const GCS = require('./storage')
+const gcs = new GCS('datana-dev', '/api_key/key.json')
+const file = gcs.file('userdata/test.txt')
 
-const key = require('./key.json')
-const authClient = new google.auth.JWT(
-  key.client_email,
-  null,
-  key.private_key,
-  ['https://www.googleapis.com/auth/cloud-platform'],
-  null
-)
-
-authClient.authorize((err, tokens) => {
-  if (err) {
-    console.log('auth error', err)
-    return
-  }
-
-  storage.objects.get({
-    auth: authClient,
-    bucket: 'datana-dev',
-    object: encodeURIComponent('userdata/test.txt') + '?alt=media'
-  }, (err, res) => {
-    if (err) {
-      console.log('get error', err)
-      return
-    }
-    console.log(res)
-  })
-  /* storage.objects.list({
-    auth: authClient,
-    bucket: 'datana-dev',
-    prefix: 'userdata/users.csv'
-  }, (err, res) => {
-    if (err) {
-      return console.log('list error', err)
-    }
-    console.log(res)
+file.download()
+  .then((content) => {
+    console.log(content)
   }) */
+
+/* const Auth = require('./lib/common/auth')
+const auth = new Auth('/api_key/key.json')
+
+auth.authenticate()
+  .then(tokens => {
+    console.log(tokens)
+  })
+*/
+
+/* const Google = require('./lib')
+const google = new Google('/api_key/key.json')
+const storage = google.storage({
+  bucketName: 'datana-dev',
 })
+
+console.log(storage) */
+
+const Google = require('./lib')
+const google = new Google('/api_key/key.json')
+const file = google.storage({
+  bucketName: 'datana-dev',
+}).file('userdata/test.txt')
+
+file.download()
+  .then(res => console.log(res))
