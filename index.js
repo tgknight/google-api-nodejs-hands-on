@@ -1,36 +1,31 @@
 'use strict'
 
-/* const GCS = require('./storage')
-const gcs = new GCS('datana-dev', '/api_key/key.json')
-const file = gcs.file('userdata/test.txt')
+const Google = require('./lib')
+const google = new Google({
+  projectId: 'siwat-project',
+  keyFilename: '/api_key/key.json',
+})
+/* const bucket = google.storage({
+  location: 'asia-east1',
+}).bucket('datana-dev')
+const file = bucket.file('userdata/test.txt')
+const file2 = bucket.file('userdata/README.md')
 
-file.download()
-  .then((content) => {
-    console.log(content)
-  }) */
+// bucket.get().then(res => console.log(res))
 
-/* const Auth = require('./lib/common/auth')
-const auth = new Auth('/api_key/key.json')
+file.download().then(res => console.log(res))
+file2.download().then(res => console.log(res))
 
-auth.authenticate()
-  .then(tokens => {
-    console.log(tokens)
-  })
+/* const newBucket = google.storage({
+  location: 'asia-east1',
+}).bucket('new-datana-bucket-tmp')
+
+newBucket.create()
+  .then(res => console.log(res))
+  .catch(err => console.log(err))
 */
 
-/* const Google = require('./lib')
-const google = new Google('/api_key/key.json')
-const storage = google.storage({
-  bucketName: 'datana-dev',
-})
-
-console.log(storage) */
-
-const Google = require('./lib')
-const google = new Google('/api_key/key.json')
-const file = google.storage({
-  bucketName: 'datana-dev',
-}).file('userdata/test.txt')
-
-file.download()
-  .then(res => console.log(res))
+const deleted = google.storage({
+  location: 'asia-east1',
+}).bucket('tobedeleted')
+deleted.delete().then(res => console.log(res)).catch(err => console.log(err))
