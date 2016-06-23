@@ -1,5 +1,6 @@
 'use strict'
 
-const lib = require('./lib')
-
-module.exports = lib
+module.exports = config => {
+  const GoogleApis = require('./lib')
+  return new GoogleApis(config)
+}
